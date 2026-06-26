@@ -1,10 +1,10 @@
-import React from 'react'
+import LandingPage from "@/pages/LandingPage";
 
-type Props = {}
-
-const Home = (props: Props) => {
+const Home = () => {
   return (
-    <div>page</div>
+    <main>
+      <LandingPage/>
+    </main>
   )
 }
 
