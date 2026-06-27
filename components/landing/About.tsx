@@ -1,19 +1,70 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Sparkles, MessageCircle, Timer, Globe, ShieldCheck } from "lucide-react";
+import {
+  Sparkles,
+  MessageCircle,
+  Timer,
+  Globe,
+  ShieldCheck,
+  Zap,
+  Users,
+  type LucideIcon,
+} from "lucide-react";
 
-interface Stat {
-  icon: typeof MessageCircle;
+interface StatCard {
+  icon: LucideIcon;
   value: string;
   label: string;
+  description: string;
 }
 
-const STATS: Stat[] = [
-  { icon: MessageCircle, value: "12M+", label: "Conversations resolved" },
-  { icon: Timer, value: "<2s", label: "Median first response" },
-  { icon: Globe, value: "47", label: "Languages supported" },
-  { icon: ShieldCheck, value: "99.98%", label: "Uptime, every quarter" },
+interface StoryCard {
+  icon: LucideIcon;
+  title: string;
+  description: string;
+}
+
+const STAT_CARDS: StatCard[] = [
+  {
+    icon: MessageCircle,
+    value: "12M+",
+    label: "Conversations resolved",
+    description: "Across every channel, around the clock, without adding headcount.",
+  },
+  {
+    icon: Timer,
+    value: "<2s",
+    label: "Median first response",
+    description: "Customers get an answer before they even finish thinking about leaving.",
+  },
+  {
+    icon: Globe,
+    value: "47",
+    label: "Languages supported",
+    description: "Native-language support for every customer, with zero setup on your end.",
+  },
+  {
+    icon: ShieldCheck,
+    value: "99.98%",
+    label: "Uptime, every quarter",
+    description: "Enterprise-grade reliability so your support never goes dark.",
+  },
+];
+
+const STORY_CARDS: StoryCard[] = [
+  {
+    icon: Zap,
+    title: "Built from frustration",
+    description:
+      "We watched too many good companies lose customers to slow tickets and tired templates. SupportMint is the tool we wished existed.",
+  },
+  {
+    icon: Users,
+    title: "Designed for your team",
+    description:
+      "The AI handles the routine so your people can focus on the conversations that actually need a human touch.",
+  },
 ];
 
 const aboutStyles = `
@@ -29,11 +80,11 @@ const aboutStyles = `
   z-index: 0;
 }
 
-.about-panel {
+.about-card {
   position: relative;
   background: var(--color-surface);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-2xl);
+  border-radius: var(--radius-xl);
   padding: 1.875rem;
   box-shadow: var(--shadow-sm);
   overflow: hidden;
@@ -44,7 +95,7 @@ const aboutStyles = `
     background-color .45s var(--ease-smooth);
 }
 
-.about-panel::before {
+.about-card::before {
   content: "";
   position: absolute;
   top: 0;
@@ -58,31 +109,26 @@ const aboutStyles = `
   transition: transform .7s cubic-bezier(.22,1,.36,1);
 }
 
-.about-panel:hover {
+.about-card:hover {
   transform: translateY(-10px);
   border-color: var(--color-primary-border);
   box-shadow: var(--glow-mint-md);
   background: linear-gradient(180deg, white, #fcfffd);
 }
 
-.about-panel:hover::before {
+.about-card:hover::before {
   transform: scaleX(1);
 }
 
-.about-stat {
-  position: relative;
-  padding: 1.375rem 1.25rem;
-  border-radius: var(--radius-lg);
-  background: var(--color-base-alt);
-  transition: background-color .45s var(--ease-smooth), transform .45s var(--ease-smooth);
+.about-card h3 {
+  transition: color .4s var(--ease-smooth);
 }
 
-.about-stat:hover {
-  background: var(--color-primary-subtle);
-  transform: translateY(-3px);
+.about-card:hover h3 {
+  color: var(--color-primary);
 }
 
-.about-stat-icon {
+.about-icon-tile {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -99,7 +145,7 @@ const aboutStyles = `
     box-shadow .45s var(--ease-smooth);
 }
 
-.about-stat:hover .about-stat-icon {
+.about-card:hover .about-icon-tile {
   background: linear-gradient(155deg, var(--color-primary), var(--color-primary-hover));
   color: #ffffff;
   transform: rotate(-6deg) scale(1.08);
@@ -110,17 +156,28 @@ const aboutStyles = `
   transition: color .4s var(--ease-smooth);
 }
 
-.about-stat:hover .about-stat-value {
+.about-card:hover .about-stat-value {
   color: var(--color-primary);
+}
+
+.about-quote-card {
+  position: relative;
+  background: linear-gradient(155deg, var(--color-primary-subtle), var(--color-primary-tint));
+  border: 1px solid var(--color-primary-border);
+  border-radius: var(--radius-xl);
+  padding: 1.875rem;
+  overflow: hidden;
+  grid-column: span 2;
 }
 
 .about-quote-mark {
   position: absolute;
-  top: -0.5rem;
-  left: -0.25rem;
+  top: -0.25rem;
+  left: 0.75rem;
   font-family: var(--font-display);
-  font-size: 3.5rem;
-  color: var(--color-primary-tint);
+  font-size: 5rem;
+  color: var(--color-primary);
+  opacity: 0.15;
   line-height: 1;
   user-select: none;
 }
@@ -129,20 +186,12 @@ const aboutStyles = `
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
 const fadeUp = {
-  hidden: {
-    opacity: 0,
-    y: 60,
-    scale: 0.96,
-  },
+  hidden: { opacity: 0, y: 60, scale: 0.96 },
   show: (delay: number) => ({
     opacity: 1,
     y: 0,
     scale: 1,
-    transition: {
-      duration: 1.1,
-      delay,
-      ease: easeOut,
-    },
+    transition: { duration: 1.1, delay, ease: easeOut },
   }),
 };
 
@@ -196,115 +245,61 @@ export function About() {
           </motion.p>
         </div>
 
-        <div className="relative z-10 mt-16 grid grid-cols-1 items-start gap-10 lg:grid-cols-2">
-      <motion.div
-  initial="hidden"
-  whileInView="show"
-  viewport={{ once: true, margin: "-80px" }}
-  variants={fadeUp}
-  custom={0.2}
-  className="flex flex-col gap-6"
->
-  <div className="rounded-[var(--radius-xl)] border border-[var(--color-border)] bg-[var(--color-surface)] p-6 shadow-[var(--shadow-sm)]">
-    <div className="flex items-center gap-3">
-      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--color-primary-tint)] text-sm font-semibold text-[var(--color-primary)]">
-        J
-      </div>
-      <div>
-        <div className="text-[0.9375rem] font-semibold tracking-[-0.01em] text-[var(--color-ink)]">
-          Jamie Reeves
+        <div className="relative z-10 mt-16 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {STORY_CARDS.map((card, index) => {
+            const Icon = card.icon;
+            return (
+              <motion.div
+                key={card.title}
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true, margin: "-60px" }}
+                variants={fadeUp}
+                custom={0.2 + index * 0.18}
+                className="about-card"
+              >
+                <div className="about-icon-tile">
+                  <Icon size={21} strokeWidth={2} />
+                </div>
+                <h3 className="mt-6 text-[1.0625rem] font-semibold tracking-[-0.01em] text-[var(--color-ink)]">
+                  {card.title}
+                </h3>
+                <p className="mt-2.5 text-[0.9375rem] leading-relaxed text-[var(--color-ink-tertiary)]">
+                  {card.description}
+                </p>
+              </motion.div>
+            );
+          })}
+
+          {STAT_CARDS.map((stat, index) => {
+            const Icon = stat.icon;
+            return (
+              <motion.div
+                key={stat.label}
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true, margin: "-60px" }}
+                variants={fadeUp}
+                custom={0.74 + index * 0.18}
+                className="about-card"
+              >
+                <div className="about-icon-tile">
+                  <Icon size={21} strokeWidth={2} />
+                </div>
+                <div className="about-stat-value mt-6 font-[var(--font-display)] text-[2rem] font-medium tracking-[-0.02em] text-[var(--color-ink)]">
+                  {stat.value}
+                </div>
+                <h3 className="mt-1 text-[1.0625rem] font-semibold tracking-[-0.01em] text-[var(--color-ink)]">
+                  {stat.label}
+                </h3>
+                <p className="mt-2.5 text-[0.9375rem] leading-relaxed text-[var(--color-ink-tertiary)]">
+                  {stat.description}
+                </p>
+              </motion.div>
+            );
+          })}
         </div>
-        <div className="text-[0.8125rem] text-[var(--color-ink-muted)]">
-          Head of CX, Fable Commerce
-        </div>
-      </div>
-    </div>
-    <p className="mt-4 text-[0.9375rem] leading-relaxed text-[var(--color-ink-tertiary)]">
-      We went from a 6-hour average reply time to under 90 seconds.
-      Our team now only touches the conversations that actually need them.
-    </p>
-    <div className="mt-4 flex items-center gap-1">
-      {[...Array(5)].map((_, i) => (
-        <svg key={i} width="14" height="14" viewBox="0 0 14 14" fill="none">
-          <path
-            d="M7 1l1.545 3.13L12 4.635l-2.5 2.435.59 3.44L7 8.885l-3.09 1.625.59-3.44L2 4.635l3.455-.505L7 1z"
-            fill="var(--color-primary)"
-          />
-        </svg>
-      ))}
-    </div>
-  </div>
 
-  <p className="text-[1.0625rem] leading-relaxed text-[var(--color-ink-tertiary)]">
-    We started SupportMint after watching too many good companies lose
-    customers to slow tickets and tired templates. So we built an AI
-    layer that actually understands your product, answers like a
-    teammate would, and only hands off what genuinely needs a human.
-  </p>
-
-  <div className="flex items-center gap-3 border-t border-[var(--color-border-subtle)] pt-6">
-    <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--color-primary)] text-sm font-semibold text-white">
-      M
-    </span>
-    <div className="text-left">
-      <div className="text-[0.9375rem] font-semibold tracking-[-0.01em] text-[var(--color-ink)]">
-        Built by a small, obsessive team
-      </div>
-      <div className="text-[0.8125rem] text-[var(--color-ink-muted)]">
-        Shipping support tooling since day one
-      </div>
-    </div>
-  </div>
-</motion.div>
-
-          <motion.div
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, margin: "-80px" }}
-            variants={fadeUp}
-            custom={0.35}
-          >
-            <div className="about-panel">
-              <span className="about-quote-mark" aria-hidden="true">
-                &ldquo;
-              </span>
-              <p className="relative z-10 text-[1.0625rem] leading-relaxed text-[var(--color-ink-secondary)]">
-                SupportMint cut our response time from hours to seconds,
-                without losing the tone our customers expect from us.
-              </p>
-              <div className="mt-4 text-[0.8125rem] font-medium text-[var(--color-ink-muted)]">
-                Head of Support, mid-market retail brand
-              </div>
-
-              <div className="mt-7 grid grid-cols-2 gap-3">
-                {STATS.map((stat, index) => {
-                  const Icon = stat.icon;
-                  return (
-                    <motion.div
-                      key={stat.label}
-                      initial="hidden"
-                      whileInView="show"
-                      viewport={{ once: true, margin: "-60px" }}
-                      variants={fadeUp}
-                      custom={0.45 + index * 0.18}
-                      className="about-stat"
-                    >
-                      <div className="about-stat-icon">
-                        <Icon size={21} strokeWidth={2} />
-                      </div>
-                      <div className="about-stat-value mt-6 font-[var(--font-display)] text-[1.5rem] font-medium tracking-[-0.02em] text-[var(--color-ink)]">
-                        {stat.value}
-                      </div>
-                      <div className="mt-2.5 text-[0.9375rem] leading-relaxed text-[var(--color-ink-tertiary)]">
-                        {stat.label}
-                      </div>
-                    </motion.div>
-                  );
-                })}
-              </div>
-            </div>
-          </motion.div>
-        </div>
       </section>
     </>
   );
