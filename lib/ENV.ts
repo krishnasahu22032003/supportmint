@@ -7,7 +7,8 @@ const ENV_SECRETS = {
     SCALEKIT_CLIENT_SECRET: process.env.SCALEKIT_CLIENT_SECRET,
     BASE_URL:process.env.NEXT_BASE_URL,
     NODE:process.env.NODE_ENV,
-    MONGO_URL:process.env.MONGO_URL
+    MONGO_URL:process.env.MONGO_URL,
+    GEMINI_KEY:process.env.GEMINI_API_KEY
 
 };
 

@@ -205,7 +205,7 @@ export default function DashboardClient({ ownerId }: { ownerId: string }) {
         setBusinessName(result.data.businessName ?? "");
         setSupportEmail(result.data.supportEmail ?? "");
         setKnowledge(result.data.knowledge ?? "");
-      } catch (error) {
+      } catch (error) { 
         console.error(error);
       }
     };
@@ -215,13 +215,14 @@ export default function DashboardClient({ ownerId }: { ownerId: string }) {
   const handleSettings = async () => {
     setLoading(true);
     try {
-      await axios.post("/api/settings", {
+    const result =  await axios.post("/api/settings", {
         ownerId,
         businessName,
         supportEmail,
         knowledge,
       });
       setSaved(true);
+      console.log(result.data)
       setTimeout(() => setSaved(false), 3000);
     } catch (error) {
       console.error(error);
