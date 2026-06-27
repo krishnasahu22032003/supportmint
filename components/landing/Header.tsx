@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import Button from "../ui/Button";
 import Link from "next/link";
 import { Sparkles, MessageSquareQuote, Tag, ArrowRight, Loader2 } from "lucide-react";
+import { toast } from "sonner";
 
 interface NavLink {
   label: string;

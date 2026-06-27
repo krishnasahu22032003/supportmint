@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { LogOut, ChevronDown, User } from "lucide-react";
 import axios from "axios";
+import { toast } from "sonner";
 
 const dashboardHeaderStyles = `
 .dash-header {
