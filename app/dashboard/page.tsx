@@ -7,10 +7,10 @@ import { getSession } from "@/lib/getSession";
 export default async function DashboardPage() {
     
   const user = await getSession();
-
+   
   if (!user) {
     redirect("/");
-  }
+  };
 
   return (
     <>
