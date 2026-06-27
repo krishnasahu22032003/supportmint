@@ -2,20 +2,30 @@ import { cookies } from "next/headers";
 import { scalekitConfig } from "./scaleKit";
 
 export async function getSession() {
+  const cookieStore = await cookies();
 
-    const session = await cookies();
-    const token = session.get("access_token")?.value;
+  const token = cookieStore.get("access_token")?.value;
 
-    if (!token) {
-        return null
+  if (!token) return null;
+
+  try {
+    const result: any = await scalekitConfig.validateToken(token);
+
+    const response = await scalekitConfig.user.getUser(result.sub);
+
+    if (!response.user) {
+      return null;
+    }
+
+    return {
+      id: response.user.id,
+      email: response.user.email,
+      name: response.user.userProfile?.name ?? "",
+      firstName: response.user.userProfile?.givenName ?? "",
+      lastName: response.user.userProfile?.familyName ?? "",
     };
-
-    try {
-        const result: any = await scalekitConfig.validateToken(token)
-        const user = await scalekitConfig.user.getUser(result.sub)
-        return user
-    } catch (error) {
-        console.log(error)
-    };
-
-};
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+}

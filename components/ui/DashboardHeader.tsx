@@ -227,8 +227,8 @@ interface DashboardHeaderProps {
 }
 
 export function DashboardHeader({
-  userName = "Krishna",
-  userEmail = "krishna@supportmint.ai",
+  userName,
+  userEmail,
   onSignOut,
 }: DashboardHeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -251,12 +251,14 @@ export function DashboardHeader({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const initials = userName
+const initials =
+  userName
+    ?.trim()
     .split(" ")
-    .map((n) => n[0])
+    .map((word) => word[0])
     .join("")
-    .toUpperCase()
-    .slice(0, 2);
+    .slice(0, 2)
+    .toUpperCase() || "";
 
   const handleSignOut = () => {
     setDropdownOpen(false);
@@ -299,7 +301,6 @@ export function DashboardHeader({
                   <User size={14} strokeWidth={2} />
                 )}
               </span>
-              <span className="dash-user-name">{userName}</span>
               <ChevronDown
                 size={14}
                 strokeWidth={2}
