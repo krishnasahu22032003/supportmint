@@ -163,7 +163,7 @@ export function Hero() {
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: heroStyles }} />
-      <section className="hero-section min-h-[90vh] px-6 py-12">
+      <section id="hero" className="hero-section min-h-[90vh] px-6 py-12">
         <div className="hero-glow" aria-hidden="true" />
 
         <div className="relative z-10 mx-auto flex w-full max-w-[820px] flex-col items-center text-center">

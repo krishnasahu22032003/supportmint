@@ -313,7 +313,7 @@ export function Header() {
       <header className={`header ${isScrolled ? "scrolled" : ""}`}>
         <div className="header-content">
           <div className="header-brand">
-            <Link href="/" className="header-logo" onClick={closeMobileMenu}>
+            <Link href="#hero" className="header-logo" onClick={closeMobileMenu}>
               <span className="header-logo-mark" aria-hidden="true">
                 <svg width="17" height="17" viewBox="0 0 16 16" fill="none">
                   <path
