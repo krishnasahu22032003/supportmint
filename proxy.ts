@@ -7,7 +7,11 @@ export function proxy(req: NextRequest) {
 
   if (!token && pathname.startsWith("/dashboard")) {
     return NextResponse.redirect(new URL("/", req.url));
-  }
+  };
+
+  if (!token && pathname.startsWith("/embed")) {
+    return NextResponse.redirect(new URL("/", req.url));
+  };
 
   if (token && pathname === "/") {
     return NextResponse.redirect(new URL("/dashboard", req.url));
@@ -17,5 +21,5 @@ export function proxy(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/", "/dashboard/:path*"],
+  matcher: ["/", "/dashboard/:path*" , "/embed/:path*"],
 };
