@@ -131,11 +131,22 @@ const heroStyles = `
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 20 },
+  hidden: {
+    opacity: 0,
+    y: 70,
+    scale: 0.96,
+    filter: "blur(10px)",
+  },
   show: (delay: number) => ({
     opacity: 1,
     y: 0,
-    transition: { duration: 0.7, delay, ease: easeOut },
+    scale: 1,
+    filter: "blur(0px)",
+    transition: {
+      duration: 1.25,
+      delay,
+      ease: easeOut,
+    },
   }),
 };
 
@@ -145,7 +156,7 @@ export function Hero() {
   useEffect(() => {
     const interval = setInterval(() => {
       setStep((s) => (s + 1) % 3);
-    }, 2600);
+    }, 4200);
     return () => clearInterval(interval);
   }, []);
 
@@ -155,7 +166,7 @@ export function Hero() {
       <section className="hero-section min-h-[90vh] px-6 py-12">
         <div className="hero-glow" aria-hidden="true" />
 
-        <div className="relative z-10 mx-auto flex w-full max-w-[720px] flex-col items-center text-center">
+        <div className="relative z-10 mx-auto flex w-full max-w-[820px] flex-col items-center text-center">
           <motion.span
             initial="hidden"
             animate="show"
@@ -171,7 +182,7 @@ export function Hero() {
             initial="hidden"
             animate="show"
             variants={fadeUp}
-            custom={0.1}
+            custom={0.25}
             className="mt-6 text-[clamp(2.25rem,4.6vw,4.5rem)] leading-[1.12] tracking-[-0.022em] text-ink"
           >
             Support that feels{" "}
@@ -184,7 +195,7 @@ export function Hero() {
             initial="hidden"
             animate="show"
             variants={fadeUp}
-            custom={0.2}
+            custom={0.55}
             className="mt-4 max-w-[520px] text-[1.1rem] leading-relaxed text-[var(--color-ink-tertiary)]"
           >
             SupportMint resolves customer questions instantly, around the
@@ -196,7 +207,7 @@ export function Hero() {
             initial="hidden"
             animate="show"
             variants={fadeUp}
-            custom={0.3}
+            custom={0.85}
             className="mt-4"
           >
             <Button variant="primary" size="lg" rightIcon={<ArrowRight size={18} />}>
@@ -208,30 +219,55 @@ export function Hero() {
             initial="hidden"
             animate="show"
             variants={fadeUp}
-            custom={0.4}
+            custom={1.05}
             className="mt-4 text-[0.8125rem] text-[var(--color-ink-muted)]"
           >
             No credit card required &middot; Setup in 5 minutes
           </motion.p>
 
           <motion.div
-            initial={{ opacity: 0, y: 30, scale: 0.97 }}
+            initial={{
+              opacity: 0,
+              y: 100,
+              scale: 0.9,
+              rotateX: 10,
+              filter: "blur(10px)",
+            }}
             animate={{
               opacity: 1,
-              y: [0, -8, 0],
+              y: 0,
               scale: 1,
+              rotateX: 0,
+              filter: "blur(0px)",
               transition: {
-                opacity: { duration: 0.8, delay: 0.5, ease: easeOut },
-                scale: { duration: 0.8, delay: 0.5, ease: easeOut },
-                y: {
-                  duration: 5,
-                  delay: 1.3,
-                  repeat: Infinity,
-                  ease: "easeInOut",
+                opacity: {
+                  duration: 1.6,
+                  delay: 1.2,
+                  ease: easeOut,
+                },
+                scale: {
+                  duration: 1.6,
+                  delay: 1.2,
+                  ease: easeOut,
+                },
+                rotateX: {
+                  duration: 1.6,
+                  delay: 1.2,
+                  ease: easeOut,
+                },
+                filter: {
+                  duration: 1.6,
+                  delay: 1.2,
                 },
               },
             }}
-            whileHover={{ y: -4 }}
+            whileHover={{
+              y: -8,
+              scale: 1.02,
+              transition: {
+                duration: 0.35,
+              },
+            }}
             className="mt-8 w-full max-w-[440px]"
           >
             <div className="hero-preview-card">
@@ -268,10 +304,31 @@ export function Hero() {
                   {step === 0 && (
                     <motion.div
                       key="typing"
-                      initial={{ opacity: 0, scale: 0.9 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.25 } }}
-                      transition={{ duration: 0.35, ease: easeOut }}
+                      initial={{
+                        opacity: 0,
+                        y: 20,
+                        scale: 0.9,
+                        filter: "blur(6px)",
+                      }}
+                      animate={{
+                        opacity: 1,
+                        y: 0,
+                        scale: 1,
+                        filter: "blur(0px)",
+                      }}
+                      exit={{
+                        opacity: 0,
+                        y: -10,
+                        scale: 0.9,
+                        filter: "blur(6px)",
+                        transition: {
+                          duration: 0.45,
+                        },
+                      }}
+                      transition={{
+                        duration: 0.8,
+                        ease: easeOut,
+                      }}
                       className="hero-typing"
                     >
                       <span className="hero-typing-dot" />
@@ -283,10 +340,28 @@ export function Hero() {
                   {step >= 1 && (
                     <motion.div
                       key="answer"
-                      initial={{ opacity: 0, y: 10, scale: 0.97 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: -6, transition: { duration: 0.3 } }}
-                      transition={{ duration: 0.45, ease: easeOut }}
+                      initial={{
+                        opacity: 0,
+                        y: 35,
+                       
+                      }}
+                      animate={{
+                        opacity: 1,
+                        y: 0,
+                        scale: 1,
+                      }}
+                      exit={{
+                        opacity: 0,
+                        y: -20,
+                        scale: 0.95,
+                        transition: {
+                          duration: 0.45,
+                        },
+                      }}
+                      transition={{
+                        duration: 1,
+                        ease: easeOut,
+                      }}
                       className="hero-bubble hero-bubble-ai"
                     >
                       Found it. Your refund of $86.00 was processed and
