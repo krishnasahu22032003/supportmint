@@ -23,7 +23,7 @@ const styles = `
   justify-content: center;
   gap: 0.5rem;
   font-family: var(--font-body);
-  font-weight: 600;
+  font-weight: 500;
   line-height: 1;
   letter-spacing: -0.011em;
   white-space: nowrap;

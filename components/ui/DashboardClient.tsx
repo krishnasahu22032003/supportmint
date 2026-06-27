@@ -234,7 +234,7 @@ export default function DashboardClient({ ownerId }: { ownerId: string }) {
     <>
       <style dangerouslySetInnerHTML={{ __html: dashboardStyles }} />
 
-      <main className="min-h-screen bg-[var(--color-base)] px-4 pb-20 pt-10 sm:px-6">
+      <main className="min-h-screen bg-[var(--color-base)] px-4 pb-20 pt-4 sm:px-6">
         <div className="mx-auto max-w-[740px]">
 
           <motion.div
@@ -242,9 +242,9 @@ export default function DashboardClient({ ownerId }: { ownerId: string }) {
             animate="show"
             variants={fadeUp}
             custom={0}
-            className="mb-10"
+            className="mb-6"
           >
-            <h1 className="font-[var(--font-display)] text-[clamp(1.6rem,3vw,2.25rem)] font-medium leading-[1.2] tracking-[-0.02em] text-[var(--color-ink)]">
+            <h1 className="font-[var(--font-display)] text-[clamp(1.6rem,3vw,3.25rem)] font-medium leading-[1.2] tracking-[-0.02em] text-[var(--color-ink)]">
               Chatbot{" "}
               <span className="italic text-[var(--color-primary)]">Settings</span>
             </h1>

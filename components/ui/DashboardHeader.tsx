@@ -1,10 +1,9 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import Link from "next/link";
-import { LogOut, ChevronDown, User } from "lucide-react";
-import axios from "axios";
-import { toast } from "sonner";
+import { LogOut, ChevronDown, User, Code2 } from "lucide-react";
+import { useRouter } from "next/navigation";
+import Button from "./Button";
 
 const dashboardHeaderStyles = `
 .dash-header {
@@ -108,16 +107,6 @@ const dashboardHeaderStyles = `
   flex-shrink: 0;
 }
 
-.dash-user-name {
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: var(--color-ink-secondary);
-  max-width: 120px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
 .dash-chevron {
   color: var(--color-ink-muted);
   transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
@@ -132,7 +121,7 @@ const dashboardHeaderStyles = `
   position: absolute;
   top: calc(100% + 0.5rem);
   right: 0;
-  min-width: 200px;
+  min-width: 210px;
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-xl);
@@ -207,17 +196,39 @@ const dashboardHeaderStyles = `
   flex-shrink: 0;
 }
 
+.dash-dropdown-divider {
+  height: 1px;
+  background: var(--color-border-subtle);
+  margin: 0.375rem 0;
+}
+
+.dash-right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.dash-embed-desktop {
+  display: flex;
+}
+
+.dash-embed-mobile {
+  display: none;
+  width: 100%;
+  padding: 0 0.375rem 0.375rem;
+}
+
 @media (max-width: 640px) {
   .dash-header-content {
     padding: 0.875rem 1rem;
   }
 
-  .dash-user-name {
+  .dash-embed-desktop {
     display: none;
   }
 
-  .dash-user-btn {
-    padding: 0.375rem;
+  .dash-embed-mobile {
+    display: block;
   }
 }
 `;
@@ -227,13 +238,11 @@ interface DashboardHeaderProps {
   userEmail?: string;
 }
 
-export function DashboardHeader({
-  userName,
-  userEmail,
-}: DashboardHeaderProps) {
+export function DashboardHeader({ userName, userEmail }: DashboardHeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 8);
@@ -251,18 +260,23 @@ export function DashboardHeader({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-const initials =
-  userName
-    ?.trim()
-    .split(" ")
-    .map((word) => word[0])
-    .join("")
-    .slice(0, 2)
-    .toUpperCase() || "";
+  const initials =
+    userName
+      ?.trim()
+      .split(" ")
+      .map((word) => word[0])
+      .join("")
+      .slice(0, 2)
+      .toUpperCase() || "";
 
   const handleLogOut = () => {
-  window.location.href = "/api/auth/logout";
-}
+    window.location.href = "/api/auth/logout";
+  };
+
+  const handleEmbed = () => {
+    setDropdownOpen(false);
+    router.push("/embed");
+  };
 
   return (
     <>
@@ -270,7 +284,7 @@ const initials =
       <header className={`dash-header ${isScrolled ? "scrolled" : ""}`}>
         <div className="dash-header-content">
 
-          <Link href="/dashboard" className="dash-logo">
+          <div className="dash-logo">
             <span className="dash-logo-mark" aria-hidden="true">
               <svg width="17" height="17" viewBox="0 0 16 16" fill="none">
                 <path
@@ -283,47 +297,75 @@ const initials =
               </svg>
             </span>
             <span className="dash-logo-text">SupportMint</span>
-          </Link>
+          </div>
 
-          <div className="relative" ref={dropdownRef}>
-            <button
-              className={`dash-user-btn ${dropdownOpen ? "open" : ""}`}
-              onClick={() => setDropdownOpen((v) => !v)}
-              aria-expanded={dropdownOpen}
-              aria-haspopup="true"
-              aria-label="User menu"
-            >
-              <span className="dash-avatar">
-                {initials ? (
-                  <span style={{ fontSize: "0.75rem", fontWeight: 700 }}>{initials}</span>
-                ) : (
-                  <User size={14} strokeWidth={2} />
-                )}
-              </span>
-              <ChevronDown
-                size={14}
-                strokeWidth={2}
-                className={`dash-chevron ${dropdownOpen ? "open" : ""}`}
-              />
-            </button>
+          <div className="dash-right">
 
-            {dropdownOpen && (
-              <div className="dash-dropdown" role="menu">
-                <div className="dash-dropdown-header">
-                  <div className="dash-dropdown-name">{userName}</div>
-                  <div className="dash-dropdown-email">{userEmail}</div>
+            <div className="dash-embed-desktop">
+              <Button
+                variant="secondary"
+                size="md"
+                leftIcon={<Code2 size={15} strokeWidth={2} />}
+                onClick={handleEmbed}
+              >
+                Embed ChatBot
+              </Button>
+            </div>
+
+            <div className="relative" ref={dropdownRef}>
+              <button
+                className={`dash-user-btn ${dropdownOpen ? "open" : ""}`}
+                onClick={() => setDropdownOpen((v) => !v)}
+                aria-expanded={dropdownOpen}
+                aria-haspopup="true"
+                aria-label="User menu"
+              >
+                <span className="dash-avatar">
+                  {initials ? (
+                    <span style={{ fontSize: "0.75rem", fontWeight: 700 }}>{initials}</span>
+                  ) : (
+                    <User size={14} strokeWidth={2} />
+                  )}
+                </span>
+                <ChevronDown
+                  size={14}
+                  strokeWidth={2}
+                  className={`dash-chevron ${dropdownOpen ? "open" : ""}`}
+                />
+              </button>
+
+              {dropdownOpen && (
+                <div className="dash-dropdown" role="menu">
+                  <div className="dash-dropdown-header">
+                    <div className="dash-dropdown-name">{userName}</div>
+                    <div className="dash-dropdown-email">{userEmail}</div>
+                  </div>
+
+                  <button
+                    className="dash-dropdown-item danger"
+                    role="menuitem"
+                    onClick={handleLogOut}
+                  >
+                    <LogOut size={15} strokeWidth={2} className="dash-dropdown-item-icon" />
+                    Sign out
+                  </button>
+
+                  <div className="dash-dropdown-divider dash-embed-mobile" />
+
+                  <div className="dash-embed-mobile">
+                    <Button
+                      variant="secondary"
+                      size="md"
+                      fullWidth
+                      leftIcon={<Code2 size={15} strokeWidth={2} />}
+                      onClick={handleEmbed}
+                    >
+                      Embed ChatBot
+                    </Button>
+                  </div>
                 </div>
-
-                <button
-                  className="dash-dropdown-item danger"
-                  role="menuitem"
-                  onClick={handleLogOut}
-                >
-                  <LogOut size={15} strokeWidth={2} className="dash-dropdown-item-icon" />
-                  Sign out
-                </button>
-              </div>
-            )}
+              )}
+            </div>
           </div>
 
         </div>
