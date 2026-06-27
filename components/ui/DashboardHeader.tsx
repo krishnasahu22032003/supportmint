@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { LogOut, ChevronDown, User } from "lucide-react";
+import axios from "axios";
 
 const dashboardHeaderStyles = `
 .dash-header {
@@ -223,13 +224,11 @@ const dashboardHeaderStyles = `
 interface DashboardHeaderProps {
   userName?: string;
   userEmail?: string;
-  onSignOut?: () => void;
 }
 
 export function DashboardHeader({
   userName,
   userEmail,
-  onSignOut,
 }: DashboardHeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -260,10 +259,9 @@ const initials =
     .slice(0, 2)
     .toUpperCase() || "";
 
-  const handleSignOut = () => {
-    setDropdownOpen(false);
-    onSignOut?.();
-  };
+  const handleLogOut = () => {
+  window.location.href = "/api/auth/logout";
+}
 
   return (
     <>
@@ -318,7 +316,7 @@ const initials =
                 <button
                   className="dash-dropdown-item danger"
                   role="menuitem"
-                  onClick={handleSignOut}
+                  onClick={handleLogOut}
                 >
                   <LogOut size={15} strokeWidth={2} className="dash-dropdown-item-icon" />
                   Sign out

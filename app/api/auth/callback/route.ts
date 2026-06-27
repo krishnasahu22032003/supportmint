@@ -25,5 +25,11 @@ export async function GET(req: NextRequest) {
         path: "/"
     });
 
-    return response ;
+    response.cookies.set("id_token", session.idToken, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        path: "/",
+    });
+
+    return response;
 }
