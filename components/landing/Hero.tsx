@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Button from "../ui/Button";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Loader2 } from "lucide-react";
 
 const heroStyles = `
 .hero-section {
@@ -160,6 +160,13 @@ export function Hero() {
     return () => clearInterval(interval);
   }, []);
 
+    const [loading, setLoading] = useState(false);
+  
+    const handleLogin = () => {
+      setLoading(true)
+      window.location.href = "/api/auth/login"
+    };
+
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: heroStyles }} />
@@ -210,8 +217,21 @@ export function Hero() {
             custom={0.85}
             className="mt-4"
           >
-            <Button variant="primary" size="lg" rightIcon={<ArrowRight size={18} />}>
-              Start free trial
+               <Button
+              variant="primary"
+              size="md"
+              fullWidth
+              disabled={loading}
+              rightIcon={
+                loading ? (
+                  <Loader2 size={16} className="animate-spin" />
+                ) : (
+                  <ArrowRight size={16} />
+                )
+              }
+              onClick={handleLogin}
+            >
+              {loading ? "Launching SupportMint..." : "Get Started"}
             </Button>
           </motion.div>
 

@@ -1,8 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowRight, Sparkles } from "lucide-react";
+import { ArrowRight, Loader2, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/Button";
+import { useState } from "react";
 
 const ctaStyles = `
 .cta-wrap {
@@ -127,7 +128,17 @@ const TRUST_ITEMS = [
   "Cancel anytime",
 ];
 
+
 export function CTA() {
+
+    
+  const [loading, setLoading] = useState(false);
+
+  const handleLogin = () => {
+    setLoading(true)
+    window.location.href = "/api/auth/login"
+  };
+  
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: ctaStyles }} />
@@ -187,13 +198,22 @@ export function CTA() {
                 custom={0.38}
                 className="mt-8"
               >
-                <Button
-                  variant="primary"
-                  size="xl"
-                  rightIcon={<ArrowRight size={18} strokeWidth={2.2} />}
-                >
-                  Start your free trial
-                </Button>
+                   <Button
+              variant="primary"
+              size="md"
+              fullWidth
+              disabled={loading}
+              rightIcon={
+                loading ? (
+                  <Loader2 size={16} className="animate-spin" />
+                ) : (
+                  <ArrowRight size={16} />
+                )
+              }
+              onClick={handleLogin}
+            >
+              {loading ? "Launching SupportMint..." : "Get Started"}
+            </Button>
               </motion.div>
 
               <motion.div

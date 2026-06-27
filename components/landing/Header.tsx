@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Button from "../ui/Button";
 import Link from "next/link";
-import { Sparkles, MessageSquareQuote, Tag, ArrowRight } from "lucide-react";
+import { Sparkles, MessageSquareQuote, Tag, ArrowRight, Loader2 } from "lucide-react";
 
 interface NavLink {
   label: string;
@@ -307,6 +307,14 @@ export function Header() {
 
   const closeMobileMenu = () => setMobileMenuOpen(false);
 
+  const [loading, setLoading] = useState(false);
+
+  const handleLogin = () => {
+    setLoading(true)
+    window.location.href = "/api/auth/login"
+  };
+
+
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: headerStyles }} />
@@ -328,11 +336,11 @@ export function Header() {
               <span className="header-logo-text">SupportMint</span>
             </Link>
 
-          
+
           </div>
 
           <div className="header-actions">
-              <nav className="header-nav">
+            <nav className="header-nav">
               {NAV_LINKS.map((link) => {
                 const Icon = link.icon;
                 return (
@@ -344,9 +352,23 @@ export function Header() {
               })}
             </nav>
             <div className="desktop-only">
-              <Button variant="primary" size="md" rightIcon={<ArrowRight size={17} />}>
-                Get Started
-              </Button>
+            
+            <Button
+              variant="primary"
+              size="md"
+              fullWidth
+              disabled={loading}
+              rightIcon={
+                loading ? (
+                  <Loader2 size={16} className="animate-spin" />
+                ) : (
+                  <ArrowRight size={16} />
+                )
+              }
+              onClick={handleLogin}
+            >
+              {loading ? "Launching SupportMint..." : "Get Started"}
+            </Button>
             </div>
 
             <button
@@ -379,14 +401,22 @@ export function Header() {
           })}
           <div className="mobile-menu-divider" />
           <div className="mobile-menu-actions">
+
             <Button
               variant="primary"
               size="md"
               fullWidth
-              rightIcon={<ArrowRight size={16} />}
-              onClick={closeMobileMenu}
+              disabled={loading}
+              rightIcon={
+                loading ? (
+                  <Loader2 size={16} className="animate-spin" />
+                ) : (
+                  <ArrowRight size={16} />
+                )
+              }
+              onClick={handleLogin}
             >
-              Get Started
+              {loading ? "Launching SupportMint..." : "Get Started"}
             </Button>
           </div>
         </div>
