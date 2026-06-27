@@ -18,28 +18,52 @@ interface Testimonial {
 
 const TESTIMONIALS: Testimonial[] = [
   {
-    name: "Sarah Chen",
-    role: "Head of Support",
-    company: "Orbit Commerce",
-    initials: "SC",
+    name: "Sophia Martinez",
+    role: "Online Shopper",
+    company: "Verified Customer",
+    initials: "SM",
     review:
-      "SupportMint transformed the way we handle customer conversations. First response time dropped from hours to seconds, while our support team finally had time to focus on complex issues instead of answering the same questions all day.",
+      "I honestly couldn't tell I was chatting with an AI. My refund question was answered instantly, and I had everything I needed in less than a minute. It saved me so much time.",
   },
   {
-    name: "Daniel Ross",
-    role: "Founder",
-    company: "NovaCloud",
-    initials: "DR",
+    name: "James Walker",
+    role: "Returning Customer",
+    company: "Verified Customer",
+    initials: "JW",
     review:
-      "The most surprising part wasn't the automation—it was how natural every response felt. Customers genuinely believed they were talking to our own support team, and satisfaction scores increased almost immediately.",
+      "Usually support chats keep me waiting forever, but this experience was completely different. Every answer felt natural, accurate, and available exactly when I needed it.",
   },
   {
-    name: "Emily Parker",
-    role: "Customer Experience Director",
-    company: "BrightFlow",
-    initials: "EP",
+    name: "Ava Thompson",
+    role: "Small Business Owner",
+    company: "Verified Customer",
+    initials: "AT",
     review:
-      "Within the first week we automated nearly 70% of incoming conversations. Our agents now spend their time solving meaningful customer problems instead of repetitive tickets.",
+      "The chatbot understood my issue immediately and even suggested the exact solution before I finished explaining everything. It genuinely felt like chatting with a real support agent.",
+  },
+  {
+    name: "Ethan Brooks",
+    role: "Long-time Customer",
+    company: "Verified Customer",
+    initials: "EB",
+    review:
+      "What impressed me most was how fast everything happened. No waiting, no repeating myself, and the answers were actually helpful instead of generic automated responses.",
+  },
+  {
+    name: "Olivia Carter",
+    role: "Premium Member",
+    company: "Verified Customer",
+    initials: "OC",
+    review:
+      "I contacted support late at night expecting to wait until morning, but SupportMint solved my problem immediately. It's easily one of the best customer support experiences I've had.",
+  },
+  {
+    name: "Noah Patel",
+    role: "Verified Customer",
+    company: "Verified Customer",
+    initials: "NP",
+    review:
+      "The conversation felt incredibly smooth and personal. It remembered the details I shared and guided me to the solution without making me repeat anything. That's exactly how modern support should work.",
   },
 ];
 
@@ -51,12 +75,7 @@ const testimonialStyles = `
   width: 1200px;
   height: 620px;
   transform: translateX(-50%);
-  background:
-    radial-gradient(
-      ellipse at center,
-      rgb(15 139 108 / 0.07),
-      transparent 70%
-    );
+  background: radial-gradient(ellipse at center, rgb(15 139 108 / 0.07), transparent 70%);
   pointer-events: none;
   z-index: -1;
 }
@@ -66,17 +85,12 @@ const testimonialStyles = `
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: 360px;
   overflow: hidden;
-
-  padding: 2rem;
-
+  padding: 1.5rem;
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-xl);
-
   box-shadow: var(--shadow-sm);
-
   transition:
     transform .45s var(--ease-smooth),
     box-shadow .45s var(--ease-smooth),
@@ -84,232 +98,138 @@ const testimonialStyles = `
     background .45s var(--ease-smooth);
 }
 
-.testimonial-card::before{
-  content:"";
-  position:absolute;
-  top:0;
-  left:1.5rem;
-  right:1.5rem;
-
-  height:2px;
-
-  border-radius:999px;
-
-  background:
-    linear-gradient(
-      90deg,
-      transparent,
-      var(--color-primary),
-      transparent
-    );
-
-  transform:scaleX(0);
-  transform-origin:center;
-
-  transition:
-    transform .7s cubic-bezier(.22,1,.36,1);
+.testimonial-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 1.5rem;
+  right: 1.5rem;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, var(--color-primary), transparent);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform .7s cubic-bezier(.22,1,.36,1);
 }
 
-.testimonial-card:hover{
-  transform:translateY(-10px);
-
-  border-color:var(--color-primary-border);
-
-  background:
-    linear-gradient(
-      180deg,
-      white,
-      #fcfffd
-    );
-
-  box-shadow:var(--glow-mint-md);
+.testimonial-card:hover {
+  transform: translateY(-10px);
+  border-color: var(--color-primary-border);
+  background: linear-gradient(180deg, white, #fcfffd);
+  box-shadow: var(--glow-mint-md);
 }
 
-.testimonial-card:hover::before{
-  transform:scaleX(1);
+.testimonial-card:hover::before {
+  transform: scaleX(1);
 }
 
-.testimonial-quote{
-  position:absolute;
-  top:1.6rem;
-  right:1.6rem;
-
-  color:var(--color-primary);
-
-  opacity:.08;
-
-  transition:
-    transform .45s var(--ease-smooth),
-    opacity .45s var(--ease-smooth);
+.testimonial-quote {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  color: var(--color-primary);
+  opacity: .08;
+  transition: transform .45s var(--ease-smooth), opacity .45s var(--ease-smooth);
 }
 
-.testimonial-card:hover .testimonial-quote{
-  opacity:.18;
-  transform:
-    rotate(-8deg)
-    scale(1.08);
+.testimonial-card:hover .testimonial-quote {
+  opacity: .18;
+  transform: rotate(-8deg) scale(1.08);
 }
 
-.testimonial-stars{
-  display:flex;
-  align-items:center;
-  gap:.22rem;
-
-  color:var(--color-primary);
-
-  margin-bottom:1.5rem;
-
-  transition:
-    transform .4s var(--ease-smooth);
+.testimonial-stars {
+  display: flex;
+  align-items: center;
+  gap: .22rem;
+  color: var(--color-primary);
+  margin-bottom: 1rem;
+  transition: transform .4s var(--ease-smooth);
 }
 
-.testimonial-card:hover .testimonial-stars{
-  transform:translateX(2px);
+.testimonial-card:hover .testimonial-stars {
+  transform: translateX(2px);
 }
 
-.testimonial-text{
-  flex:1;
-
-  font-size:1rem;
-
-  line-height:1.8;
-
-  color:var(--color-ink-secondary);
-
-  transition:
-    color .4s var(--ease-smooth);
+.testimonial-text {
+  flex: 1;
+  font-size: .9375rem;
+  line-height: 1.75;
+  color: var(--color-ink-secondary);
+  transition: color .4s var(--ease-smooth);
 }
 
-.testimonial-card:hover .testimonial-text{
-  color:var(--color-ink);
+.testimonial-card:hover .testimonial-text {
+  color: var(--color-ink);
 }
 
-.testimonial-footer{
-  display:flex;
-  align-items:center;
-  gap:1rem;
-
-  margin-top:2rem;
+.testimonial-footer {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  margin-top: 1.25rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--color-border-subtle);
 }
 
-.testimonial-avatar{
-  width:54px;
-  height:54px;
-
-  flex-shrink:0;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  border-radius:50%;
-
-  background:
-    linear-gradient(
-      155deg,
-      var(--color-primary),
-      var(--color-primary-hover)
-    );
-
-  color:white;
-
-  font-size:.95rem;
-  font-weight:700;
-  letter-spacing:.03em;
-
-  box-shadow:var(--shadow-md);
-
-  transition:
-    transform .45s var(--ease-smooth),
-    box-shadow .45s var(--ease-smooth);
+.testimonial-avatar {
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: linear-gradient(155deg, var(--color-primary), var(--color-primary-hover));
+  color: white;
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .03em;
+  box-shadow: var(--shadow-sm);
+  transition: transform .45s var(--ease-smooth), box-shadow .45s var(--ease-smooth);
 }
 
-.testimonial-card:hover .testimonial-avatar{
-  transform:
-    rotate(-6deg)
-    scale(1.08);
-
-  box-shadow:var(--glow-mint-sm);
+.testimonial-card:hover .testimonial-avatar {
+  transform: rotate(-6deg) scale(1.08);
+  box-shadow: var(--glow-mint-sm);
 }
 
-.testimonial-name{
-  font-size:1rem;
-  font-weight:600;
-
-  color:var(--color-ink);
-
-  transition:
-    color .4s var(--ease-smooth);
+.testimonial-name {
+  font-size: .9375rem;
+  font-weight: 600;
+  color: var(--color-ink);
+  transition: color .4s var(--ease-smooth);
 }
 
-.testimonial-card:hover .testimonial-name{
-  color:var(--color-primary);
+.testimonial-card:hover .testimonial-name {
+  color: var(--color-primary);
 }
 
-.testimonial-role{
-  margin-top:.2rem;
-
-  font-size:.9rem;
-
-  color:var(--color-ink-secondary);
+.testimonial-role {
+  font-size: .8125rem;
+  color: var(--color-ink-secondary);
 }
 
-.testimonial-company{
-  margin-top:.15rem;
-
-  font-size:.86rem;
-
-  color:var(--color-ink-muted);
+.testimonial-company {
+  font-size: .8125rem;
+  color: var(--color-ink-muted);
 }
 
-@media (max-width:1024px){
-
-  .testimonial-card{
-    min-height:auto;
-  }
-
-}
-
-@media (max-width:640px){
-
-  .testimonial-card{
-    padding:1.5rem;
-  }
-
-  .testimonial-text{
-    font-size:.95rem;
-    line-height:1.75;
-  }
-
-  .testimonial-avatar{
-    width:48px;
-    height:48px;
-  }
-
-  .testimonial-glow{
-    width:700px;
-    height:420px;
-  }
-
+@media (max-width: 640px) {
+  .testimonial-card { padding: 1.25rem; }
+  .testimonial-text { font-size: .9rem; }
+  .testimonial-glow { width: 700px; height: 420px; }
 }
 `;
+
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
 const fadeUp = {
-  hidden: {
-    opacity: 0,
-    y: 60,
-    scale: 0.96,
-  },
+  hidden: { opacity: 0, y: 60, scale: 0.96 },
   show: (delay: number) => ({
     opacity: 1,
     y: 0,
     scale: 1,
-    transition: {
-      duration: 1.1,
-      delay,
-      ease: easeOut,
-    },
+    transition: { duration: 1.1, delay, ease: easeOut },
   }),
 };
 
@@ -333,11 +253,8 @@ export function Testimonials() {
             custom={0}
             className="inline-flex items-center gap-2 rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] px-4 py-2 text-[0.8125rem] font-medium text-[var(--color-ink-secondary)] shadow-[var(--shadow-sm)]"
           >
-            <Sparkles
-              size={13}
-              className="text-[var(--color-primary)]"
-            />
-            Loved by modern support teams
+            <Sparkles size={13} className="text-[var(--color-primary)]" />
+           Trusted by customers worldwide
           </motion.span>
 
           <motion.h2
@@ -346,13 +263,12 @@ export function Testimonials() {
             viewport={{ once: true, margin: "-80px" }}
             variants={fadeUp}
             custom={0.18}
-            className="mt-6 font-[var(--font-display)] text-[clamp(2.2rem,4vw,3.8rem)] font-medium leading-[1.18] tracking-[-0.025em] text-[var(--color-ink)]"
+            className="mt-6 font-[var(--font-display)] text-[clamp(2rem,4vw,3.75rem)] font-medium leading-[1.2] tracking-[-0.02em] text-[var(--color-ink)]"
           >
             Customer support that people
             <br />
-            actually <span className="italic text-[var(--color-primary)]">
-              love
-            </span>
+            actually{" "}
+            <span className="italic text-[var(--color-primary)]">love</span>
           </motion.h2>
 
           <motion.p
@@ -361,14 +277,14 @@ export function Testimonials() {
             viewport={{ once: true, margin: "-80px" }}
             variants={fadeUp}
             custom={0.34}
-            className="mt-6 max-w-[620px] text-[1.0625rem] leading-relaxed text-[var(--color-ink-tertiary)]"
+            className="mt-5 text-[1.0625rem] leading-relaxed text-[var(--color-ink-tertiary)]"
           >
-            Thousands of conversations are resolved every day with
-            SupportMint. Here's what teams say after making the switch.
+            Thousands of conversations are resolved every day with SupportMint.
+            Here's what teams say after making the switch.
           </motion.p>
         </div>
 
-        <div className="mt-20 grid gap-6 lg:grid-cols-3">
+        <div className="mt-16 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {TESTIMONIALS.map((testimonial, index) => (
             <motion.article
               key={testimonial.name}
@@ -376,46 +292,25 @@ export function Testimonials() {
               whileInView="show"
               viewport={{ once: true, margin: "-60px" }}
               variants={fadeUp}
-              custom={0.25 + index * 0.18}
+              custom={0.2 + index * 0.18}
               className="testimonial-card"
             >
-              <Quote
-                size={42}
-                strokeWidth={1.6}
-                className="testimonial-quote"
-              />
+              <Quote size={36} strokeWidth={1.6} className="testimonial-quote" />
 
               <div className="testimonial-stars">
                 {[...Array(5)].map((_, i) => (
-                  <Star
-                    key={i}
-                    size={15}
-                    fill="currentColor"
-                  />
+                  <Star key={i} size={13} fill="currentColor" />
                 ))}
               </div>
 
-              <p className="testimonial-text">
-                “{testimonial.review}”
-              </p>
+              <p className="testimonial-text">"{testimonial.review}"</p>
 
               <div className="testimonial-footer">
-                <div className="testimonial-avatar">
-                  {testimonial.initials}
-                </div>
-
+                <div className="testimonial-avatar">{testimonial.initials}</div>
                 <div>
-                  <h4 className="testimonial-name">
-                    {testimonial.name}
-                  </h4>
-
-                  <p className="testimonial-role">
-                    {testimonial.role}
-                  </p>
-
-                  <p className="testimonial-company">
-                    {testimonial.company}
-                  </p>
+                  <h4 className="testimonial-name">{testimonial.name}</h4>
+                  <p className="testimonial-role">{testimonial.role}</p>
+                  <p className="testimonial-company">{testimonial.company}</p>
                 </div>
               </div>
             </motion.article>
@@ -428,19 +323,14 @@ export function Testimonials() {
           viewport={{ once: true }}
           variants={fadeUp}
           custom={0.9}
-          className="mt-20 flex flex-col items-center"
+          className="mt-16 flex flex-col items-center"
         >
           <div className="h-px w-full max-w-[500px] bg-[var(--color-border)]" />
-
-          <p className="mt-8 text-center text-[0.95rem] text-[var(--color-ink-muted)]">
-            Trusted by <span className="font-semibold text-[var(--color-ink)]">
-              500+
-            </span>{" "}
+          <p className="mt-8 text-center text-[0.9375rem] text-[var(--color-ink-muted)]">
+            Trusted by{" "}
+            <span className="font-semibold text-[var(--color-ink)]">500+</span>{" "}
             growing companies across{" "}
-            <span className="font-semibold text-[var(--color-primary)]">
-              47 countries
-            </span>
-            .
+            <span className="font-semibold text-[var(--color-primary)]">47 countries</span>.
           </p>
         </motion.div>
       </section>
