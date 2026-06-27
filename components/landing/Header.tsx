@@ -22,17 +22,19 @@ const headerStyles = `
   position: sticky;
   top: 0;
   z-index: 40;
-  backdrop-filter: blur(16px) saturate(160%);
-  -webkit-backdrop-filter: blur(16px) saturate(160%);
-  background: rgba(251, 251, 250, 0.78);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  background: rgba(251, 251, 250, 0.6);
   border-bottom: 1px solid var(--color-border-subtle);
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  transition: background-color 0.4s ease, backdrop-filter 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
 }
 
 .header.scrolled {
-  background: rgba(251, 251, 250, 0.92);
-  border-bottom-color: var(--color-border);
-  box-shadow: 0 4px 20px -4px rgb(20 23 26 / 0.05);
+  background: rgba(251, 251, 250, 0.58);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom-color: rgba(228, 230, 226, 0.7);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) inset, 0 8px 30px -8px rgb(20 23 26 / 0.08);
 }
 
 .header-content {
@@ -189,7 +191,9 @@ const headerStyles = `
   left: 0;
   right: 0;
   z-index: 50;
-  background: var(--color-surface);
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
   border-bottom: 1px solid var(--color-border);
   padding: 0.75rem 1.25rem 1.25rem;
   display: none;

@@ -8,7 +8,6 @@ import { ArrowRight } from "lucide-react";
 const heroStyles = `
 .hero-section {
   position: relative;
-  min-height: 96vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -21,8 +20,8 @@ const heroStyles = `
   top: 0;
   left: 50%;
   width: 1100px;
-  height: 720px;
-  transform: translate(-50%, -38%);
+  height: 680px;
+  transform: translate(-50%, -42%);
   background: radial-gradient(ellipse at center, rgb(15 139 108 / 0.1), transparent 68%);
   pointer-events: none;
   z-index: -1;
@@ -30,8 +29,8 @@ const heroStyles = `
 
 .hero-badge-dot {
   position: relative;
-  width: 6px;
-  height: 6px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
   background: var(--color-online);
   flex-shrink: 0;
@@ -50,7 +49,7 @@ const heroStyles = `
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-2xl);
-  padding: 1.75rem;
+  padding: 1.625rem;
   box-shadow: var(--shadow-xl);
   transition: box-shadow 0.4s var(--ease-smooth);
 }
@@ -64,7 +63,7 @@ const heroStyles = `
   font-size: 0.875rem;
   line-height: 1.55;
   border-radius: var(--radius-lg);
-  padding: 0.75rem 1.0625rem;
+  padding: 0.6875rem 1rem;
   transition: transform 0.25s var(--ease-smooth);
   width: fit-content;
 }
@@ -99,7 +98,7 @@ const heroStyles = `
   background: var(--color-primary-subtle);
   border-radius: var(--radius-lg);
   border-top-right-radius: var(--radius-xs);
-  padding: 0.75rem 0.9375rem;
+  padding: 0.6875rem 0.875rem;
   margin-left: auto;
   width: fit-content;
 }
@@ -132,11 +131,11 @@ const heroStyles = `
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 22 },
+  hidden: { opacity: 0, y: 20 },
   show: (delay: number) => ({
     opacity: 1,
     y: 0,
-    transition: { duration: 0.8, delay, ease: easeOut },
+    transition: { duration: 0.7, delay, ease: easeOut },
   }),
 };
 
@@ -153,7 +152,7 @@ export function Hero() {
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: heroStyles }} />
-      <section className="hero-section px-6 py-20 sm:py-24">
+      <section className="hero-section min-h-[90vh] px-6 py-12">
         <div className="hero-glow" aria-hidden="true" />
 
         <div className="relative z-10 mx-auto flex w-full max-w-[720px] flex-col items-center text-center">
@@ -162,7 +161,7 @@ export function Hero() {
             animate="show"
             variants={fadeUp}
             custom={0}
-            className="inline-flex items-center gap-2.5 rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] px-6 py-2 text-[0.8125rem] font-medium text-[var(--color-ink-secondary)] shadow-[var(--shadow-xs)]"
+            className="inline-flex items-center gap-2.5 rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] px-4 py-2 text-[0.8125rem] font-medium text-[var(--color-ink-secondary)] shadow-[var(--shadow-sm)]"
           >
             <span className="hero-badge-dot" aria-hidden="true" />
             Now answering in 47 languages
@@ -172,8 +171,8 @@ export function Hero() {
             initial="hidden"
             animate="show"
             variants={fadeUp}
-            custom={0.12}
-            className="mt-8 font-[var(--font-display)] font-medium text-[clamp(2.5rem,5.5vw,4.25rem)] leading-[1.1] tracking-[-0.025em] text-[var(--color-ink)]"
+            custom={0.1}
+            className="mt-6 text-[clamp(2.25rem,4.6vw,4.5rem)] leading-[1.12] tracking-[-0.022em] text-ink"
           >
             Support that feels{" "}
             <span className="italic text-[var(--color-primary)]">human</span>,
@@ -185,8 +184,8 @@ export function Hero() {
             initial="hidden"
             animate="show"
             variants={fadeUp}
-            custom={0.24}
-            className="mt-6 max-w-[480px] text-[1.0625rem] leading-relaxed text-[var(--color-ink-tertiary)]"
+            custom={0.2}
+            className="mt-4 max-w-[520px] text-[1.1rem] leading-relaxed text-[var(--color-ink-tertiary)]"
           >
             SupportMint resolves customer questions instantly, around the
             clock, in your brand voice, without making people wait for a
@@ -197,8 +196,8 @@ export function Hero() {
             initial="hidden"
             animate="show"
             variants={fadeUp}
-            custom={0.36}
-            className="mt-10"
+            custom={0.3}
+            className="mt-4"
           >
             <Button variant="primary" size="lg" rightIcon={<ArrowRight size={18} />}>
               Start free trial
@@ -209,34 +208,34 @@ export function Hero() {
             initial="hidden"
             animate="show"
             variants={fadeUp}
-            custom={0.46}
-            className="mt-5 text-[0.8125rem] text-[var(--color-ink-muted)]"
+            custom={0.4}
+            className="mt-4 text-[0.8125rem] text-[var(--color-ink-muted)]"
           >
             No credit card required &middot; Setup in 5 minutes
           </motion.p>
 
           <motion.div
-            initial={{ opacity: 0, y: 36, scale: 0.96 }}
+            initial={{ opacity: 0, y: 30, scale: 0.97 }}
             animate={{
               opacity: 1,
-              y: [0, -10, 0],
+              y: [0, -8, 0],
               scale: 1,
               transition: {
-                opacity: { duration: 0.9, delay: 0.55, ease: easeOut },
-                scale: { duration: 0.9, delay: 0.55, ease: easeOut },
+                opacity: { duration: 0.8, delay: 0.5, ease: easeOut },
+                scale: { duration: 0.8, delay: 0.5, ease: easeOut },
                 y: {
                   duration: 5,
-                  delay: 1.4,
+                  delay: 1.3,
                   repeat: Infinity,
                   ease: "easeInOut",
                 },
               },
             }}
             whileHover={{ y: -4 }}
-            className="mt-20 w-full max-w-[460px]"
+            className="mt-8 w-full max-w-[440px]"
           >
             <div className="hero-preview-card">
-              <div className="mb-5 flex items-center gap-3 border-b border-[var(--color-border-subtle)] pb-4">
+              <div className="mb-4 flex items-center gap-3 border-b border-[var(--color-border-subtle)] pb-3.5">
                 <span className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-[var(--radius-md)] bg-[var(--color-primary)]">
                   <svg width="15" height="15" viewBox="0 0 16 16" fill="none">
                     <path
@@ -258,13 +257,13 @@ export function Hero() {
               <motion.div
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.7, ease: easeOut }}
-                className="hero-bubble hero-bubble-user mb-3"
+                transition={{ duration: 0.5, delay: 0.65, ease: easeOut }}
+                className="hero-bubble hero-bubble-user mb-2.5"
               >
                 Hey, I never got my refund for order #4521
               </motion.div>
 
-              <div className="min-h-[54px]">
+              <div className="min-h-[50px]">
                 <AnimatePresence mode="wait">
                   {step === 0 && (
                     <motion.div
