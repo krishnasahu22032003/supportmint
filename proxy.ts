@@ -1,22 +1,21 @@
-import ENV_SECRETS from "./lib/ENV";
-import { getSession } from "./lib/getSession";
-import { NextRequest , NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export const proxy = async (req:NextRequest) => {
+export function proxy(req: NextRequest) {
+  const token = req.cookies.get("access_token")?.value;
 
-const session = await getSession();
+  const { pathname } = req.nextUrl;
 
-if(!session){
+  if (!token && pathname.startsWith("/dashboard")) {
+    return NextResponse.redirect(new URL("/", req.url));
+  }
 
-    return NextResponse.redirect(`${ENV_SECRETS.BASE_URL}`);
+  if (token && pathname === "/") {
+    return NextResponse.redirect(new URL("/dashboard", req.url));
+  }
 
-};
-
-return NextResponse.next();
-
-};
+  return NextResponse.next();
+}
 
 export const config = {
-
-      matcher: '/dashboard/:path*',
+  matcher: ["/", "/dashboard/:path*"],
 };
