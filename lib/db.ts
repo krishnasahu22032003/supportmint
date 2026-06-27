@@ -1,10 +1,39 @@
 import { connect } from "mongoose";
 import ENV_SECRETS from "./ENV";
 
-const mongo_url = ENV_SECRETS.MONGO_URL ;
+const mongo_url = ENV_SECRETS.MONGO_URL;
 
-if(!mongo_url){
+if (!mongo_url) {
     console.error("Mongo Url error");
 };
 
-const cache = global.mongoose
+let cache = global.mongoose;
+
+if (!cache) {
+    cache = global.mongoose = { conn: null, promise: null }
+};
+
+const connectDB = async () => {
+
+    if (cache.conn) {
+        return cache.conn
+    };
+
+    if(!cache.promise){
+
+        cache.promise= connect(mongo_url!).then((c)=>c.connection) ;
+    };
+
+    try {
+
+        cache.conn = await cache.promise;
+
+    } catch (error) {
+
+        console.log(error);
+    }
+
+    return cache.conn ;
+};
+
+export default connectDB
