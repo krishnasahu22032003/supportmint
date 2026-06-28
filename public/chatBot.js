@@ -468,7 +468,7 @@
           </svg>
         </button>
       </div>
-      <p id="cw-powered">Powered by AI · We reply in seconds</p>
+      <p id="cw-powered">Powered by SupportMint AI · We reply in seconds</p>
     </div>
   `;
   document.body.appendChild(box);
