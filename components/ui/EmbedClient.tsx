@@ -3,7 +3,7 @@
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { motion } from "framer-motion"
-import { Code2, Copy, CheckCheck, Monitor, ChevronRight } from 'lucide-react'
+import { Code2, Copy, CheckCheck, Monitor } from 'lucide-react'
 import ENV_SECRETS from '@/lib/ENV'
 
 const embedStyles = `

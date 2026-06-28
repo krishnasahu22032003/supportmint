@@ -360,7 +360,7 @@ export function EmbedHeader({ userName, userEmail }: DashboardHeaderProps) {
                       leftIcon={<Code2 size={15} strokeWidth={2} />}
                       onClick={handleDashboard}
                     >
-                      Embed ChatBot
+                      Dashboard
                     </Button>
                   </div>
                 </div>
