@@ -1,4 +1,4 @@
-import EmbedClient from '@/components/EmbedClient'
+import EmbedClient from '@/components/ui/EmbedClient';
 import { getSession } from '@/lib/getSession'
 import { redirect } from 'next/navigation';
 
