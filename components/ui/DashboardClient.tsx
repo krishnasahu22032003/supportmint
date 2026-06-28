@@ -202,9 +202,9 @@ export default function DashboardClient({ ownerId }: { ownerId: string }) {
     const fetchDetails = async () => {
       try {
         const result = await axios.post("/api/settings/get", { ownerId });
-        setBusinessName(result.data.businessName ?? "");
-        setSupportEmail(result.data.supportEmail ?? "");
-        setKnowledge(result.data.knowledge ?? "");
+        setBusinessName(result?.data?.businessName ?? "");
+        setSupportEmail(result?.data?.supportEmail ?? "");
+        setKnowledge(result?.data?.knowledge ?? "");
       } catch (error) { 
         console.error(error);
       }
