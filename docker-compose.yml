@@ -1,0 +1,34 @@
+services:
+  nextjs:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}
+        SCALEKIT_ENVIRONMENT_URL: ${SCALEKIT_ENVIRONMENT_URL}
+        SCALEKIT_CLIENT_ID: ${SCALEKIT_CLIENT_ID}
+        SCALEKIT_CLIENT_SECRET: ${SCALEKIT_CLIENT_SECRET}
+        MONGO_URL: ${MONGO_URL}
+        GEMINI_API_KEY: ${GEMINI_API_KEY}
+        NODE_ENV: ${NODE_ENV}
+    environment:
+      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
+      - SCALEKIT_ENVIRONMENT_URL=${SCALEKIT_ENVIRONMENT_URL}
+      - SCALEKIT_CLIENT_ID=${SCALEKIT_CLIENT_ID}
+      - SCALEKIT_CLIENT_SECRET=${SCALEKIT_CLIENT_SECRET}
+      - MONGO_URL=${MONGO_URL}
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - NODE_ENV=${NODE_ENV}
+    expose:
+      - "3000"
+
+  nginx:
+    build:
+      context: .
+      dockerfile: Dockerfile.nginx
+    environment:
+      - UPSTREAM_HOST=nextjs
+    ports:
+      - "80:80"
+    depends_on:
+      - nextjs
