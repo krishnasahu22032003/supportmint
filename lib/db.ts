@@ -1,7 +1,7 @@
 import { connect } from "mongoose";
-import ENV_SECRETS from "./ENV";
+import {getEnv} from "./ENV";
 
-const mongo_url = ENV_SECRETS.MONGO_URL;
+const mongo_url = getEnv("MONGO_URL");
 
 if (!mongo_url) {
     console.error("Mongo Url error");

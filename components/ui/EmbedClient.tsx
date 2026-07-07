@@ -1,10 +1,8 @@
 'use client'
 
-import React, { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 import { motion } from "framer-motion"
 import { Code2, Copy, CheckCheck, Monitor } from 'lucide-react'
-import ENV_SECRETS from '@/lib/ENV'
 
 const embedStyles = `
 .em-section-card {
@@ -293,7 +291,7 @@ function EmbedClient({ ownerId }: { ownerId: string }) {
     const [copied, setCopied] = useState(false)
 
     const embedCode = `<script
-  src="${ENV_SECRETS.BASE_URL}/chatBot.js"
+  src="${process.env.NEXT_PUBLIC_API_URL}/chatBot.js"
   data-owner-id="${ownerId}">
 </script>`
 

@@ -1,22 +1,21 @@
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
-import { scalekitConfig } from "@/lib/scaleKit";
-import ENV_SECRETS from "@/lib/ENV";
+import { getScalekit } from "@/lib/scaleKit";
+import { getEnv } from "@/lib/ENV";
 
 export async function GET() {
     const cookieStore = await cookies();
-
+      const scalekit = getScalekit();
     // Get the ID token BEFORE deleting it
     
     const idToken = cookieStore.get("id_token")?.value;
 
-    const postLogoutRedirectUri = `${ENV_SECRETS.BASE_URL}`;
+   const postLogoutRedirectUri = getEnv("NEXT_PUBLIC_API_URL");
 
-    const logoutUrl = scalekitConfig.getLogoutUrl({
+    const logoutUrl = scalekit.getLogoutUrl({
         idTokenHint: idToken,
         postLogoutRedirectUri,
     });
-    console.log(logoutUrl)
     const response = NextResponse.redirect(logoutUrl);
 
     response.cookies.delete("access_token");

@@ -1,15 +1,11 @@
-import "dotenv/config";
+function getEnv(name: string): string {
+  const value = process.env[name];
 
-const ENV_SECRETS = {
+  if (!value) {
+    throw new Error(`Missing environment variable: ${name}`);
+  }
 
-    SCALEKIT_ENVIRONMENT_URL: process.env.SCALEKIT_ENVIRONMENT_URL,
-    SCALEKIT_CLIENT_ID: process.env.SCALEKIT_CLIENT_ID,
-    SCALEKIT_CLIENT_SECRET: process.env.SCALEKIT_CLIENT_SECRET,
-    BASE_URL:process.env.NEXT_PUBLIC_API_URL,
-    NODE:process.env.NODE_ENV,
-    MONGO_URL:process.env.MONGO_URL,
-    GEMINI_KEY:process.env.GEMINI_API_KEY
+  return value;
+}
 
-};
-
-export default ENV_SECRETS; 
+export { getEnv };

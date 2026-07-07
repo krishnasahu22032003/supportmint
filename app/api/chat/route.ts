@@ -1,5 +1,5 @@
 import connectDB from "@/lib/db"
-import ENV_SECRETS from "@/lib/ENV";
+import {getEnv} from "@/lib/ENV";
 import Settings from "@/models/setting.model"
 import { NextRequest, NextResponse } from "next/server"
 import { GoogleGenAI } from "@google/genai";
@@ -58,7 +58,9 @@ ANSWER
 --------------------
 `;
 
-        const ai = new GoogleGenAI({ apiKey: ENV_SECRETS.GEMINI_KEY as string });
+        const ai = new GoogleGenAI({
+  apiKey: getEnv("GEMINI_API_KEY"),
+});
         const res = await ai.models.generateContent({
             model: "gemini-2.5-flash",
             contents: prompt,

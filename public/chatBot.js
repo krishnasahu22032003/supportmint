@@ -1,5 +1,5 @@
 (function () {
-  const API_URL = "http://localhost:3000/api/chat";
+  const API_URL = "https://supportmint.krishnastack.com/api/chat";
 
   const scriptTag = document.currentScript;
   const ownerId = scriptTag.getAttribute("data-owner-id");

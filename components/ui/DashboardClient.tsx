@@ -222,7 +222,6 @@ export default function DashboardClient({ ownerId }: { ownerId: string }) {
         knowledge,
       });
       setSaved(true);
-      console.log(result.data)
       setTimeout(() => setSaved(false), 3000);
     } catch (error) {
       console.error(error);

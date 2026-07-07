@@ -1,17 +1,17 @@
 import { cookies } from "next/headers";
-import { scalekitConfig } from "./scaleKit";
+import { getScalekit } from "./scaleKit";
 
 export async function getSession() {
   const cookieStore = await cookies();
-
+ const scalekit = getScalekit();
   const token = cookieStore.get("access_token")?.value;
 
   if (!token) return null;
 
   try {
-    const result: any = await scalekitConfig.validateToken(token);
+    const result: any = await scalekit.validateToken(token);
 
-    const response = await scalekitConfig.user.getUser(result.sub);
+    const response = await scalekit.user.getUser(result.sub);
 
     if (!response.user) {
       return null;

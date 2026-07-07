@@ -1,11 +1,16 @@
-import ENV_SECRETS from "./ENV";
 import { Scalekit } from "@scalekit-sdk/node";
+import { getEnv } from "./ENV";
 
-export const scalekitConfig = new Scalekit(
+let scalekit: Scalekit | null = null;
 
-    ENV_SECRETS.SCALEKIT_ENVIRONMENT_URL as string,
-    ENV_SECRETS.SCALEKIT_CLIENT_ID as string,
-    ENV_SECRETS.SCALEKIT_CLIENT_SECRET as string
-) ;
+export function getScalekit() {
+  if (!scalekit) {
+    scalekit = new Scalekit(
+      getEnv("SCALEKIT_ENVIRONMENT_URL"),
+      getEnv("SCALEKIT_CLIENT_ID"),
+      getEnv("SCALEKIT_CLIENT_SECRET")
+    );
+  }
 
-
+  return scalekit;
+}

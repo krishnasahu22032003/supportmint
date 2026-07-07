@@ -1,22 +1,21 @@
-import ENV_SECRETS from "@/lib/ENV";
-import { scalekitConfig } from "@/lib/scaleKit";
+import { getEnv } from "@/lib/ENV";
+import { getScalekit } from "@/lib/scaleKit";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
 
     const { searchParams } = new URL(req.url);
     const code = searchParams.get("code");
-
-    const redirectUri = `${ENV_SECRETS.BASE_URL}/api/auth/callback`;
+    const scalekit = getScalekit();
+    const redirectUri = `${getEnv("NEXT_PUBLIC_API_URL")}/api/auth/callback`;
 
     if (!code) {
         return NextResponse.json({ message: "code is not found" }, { status: 400 });
     }
 
-    const session = await scalekitConfig.authenticateWithCode(code, redirectUri);
+    const session = await scalekit.authenticateWithCode(code, redirectUri);
 
-    console.log(session)
-    const response = NextResponse.redirect(`${ENV_SECRETS.BASE_URL}/dashboard`);
+    const response = NextResponse.redirect(`${getEnv("NEXT_PUBLIC_API_URL")}/dashboard`)
 
     response.cookies.set("access_token", session.accessToken, {
         httpOnly: true,
